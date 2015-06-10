@@ -1,0 +1,18 @@
+1 63.4221875 10.3906634 Eirik Jarls gate 
+2 63.4305013 10.3950615 monument Olav Tryggvason 18m tall monument of King Olav 1 Tryggvason, founder of Trondheim.  Raised 1921. 
+3 63.3579 10.3611 NO0006 camp_site 
+4 63.4187028 10.4029231 Gløshaugen 
+5 63.4208087 10.3872711 hospital St. Olavs hospital 
+6 63.4223283 10.3955232 cafe Edgar 
+7 63.4224325 10.3949687 fast_food burger;pizza;kebab Sesam 
+8 63.4224338 10.3957807 pub Daglighallen 
+9 63.4225812 10.3951792 theatre 
+10 63.437903 10.4398098 fuel 
+11 63.4192301 10.394913 recycling 
+12 63.420853 10.3917996 parking St. Olavs Hospital P-hus underground 
+13 63.4296506 10.3939764 parking Torget P-hus 
+14 63.4324786 10.392083 parking Sentralbadet P-hus 
+15 63.4133977 10.4356842 Frode Rinnans veg 
+16 63.4087469 10.4460909 fuel Shell 
+17 63.4255347 10.4425559 place_of_worship Strindheim kirke christian 
+18 63.4247043 10.4421481 pharmacy Apoteket Ladejarlen
