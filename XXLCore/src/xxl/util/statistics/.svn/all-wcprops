@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/joao/!svn/ver/1481/projects/Util/trunk/src/util/statistics
+END
+Tally.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/joao/!svn/ver/708/projects/Util/trunk/src/util/statistics/Tally.java
+END
+Count.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/joao/!svn/ver/1269/projects/Util/trunk/src/util/statistics/Count.java
+END
+StatisticCenter.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joao/!svn/ver/1164/projects/Util/trunk/src/util/statistics/StatisticCenter.java
+END
+DefaultStatisticCenter.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/joao/!svn/ver/1481/projects/Util/trunk/src/util/statistics/DefaultStatisticCenter.java
+END
+StatisticObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/joao/!svn/ver/1269/projects/Util/trunk/src/util/statistics/StatisticObject.java
+END

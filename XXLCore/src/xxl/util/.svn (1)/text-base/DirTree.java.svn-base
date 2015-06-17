@@ -1,0 +1,151 @@
+
+package xxl.util;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import util.FileUtils;
+import util.Util;
+import util.sse.Vector;
+import util.statistics.Count;
+import util.statistics.DefaultStatisticCenter;
+import util.statistics.StatisticCenter;
+
+import xxl.core.spatial.rectangles.Rectangle;
+import xxl.core.io.converters.IntegerConverter;
+import xxl.core.spatial.KPE;
+
+/**
+ *
+ * @author joao
+ */
+public class DirTree extends IRTree {
+    /**
+     * Defines the importance of document similarity versus spatial location.
+     */
+    private double beta=0.5;
+
+    public DirTree(StatisticCenter statisticCenter, String id, String outputPath,
+            int dimensions, int bufferSize, int blockSize, int minCapacity,
+            int maxCapacity,int invertedFilesBlockSize, int vectorBlockSize,
+            int vectorCacheSize, boolean constructionTime, double beta){
+        super(statisticCenter, id, outputPath, dimensions, bufferSize, blockSize,
+                minCapacity, maxCapacity, invertedFilesBlockSize, vectorBlockSize,
+                vectorCacheSize, constructionTime);
+        this.beta = beta;
+    }
+
+    /**
+     * This method implements the simAreaCost proposed by Jensen
+     * @param r1
+     * @param rectangle
+     * @return
+     */
+    @Override
+    protected Double areaCost(Rectangle r1, Rectangle r2){        
+        try {
+            double maxArea = ((Rectangle)((IndexEntry)rootEntry).descriptor()).area();
+            double areaCost =super.areaCost(r1, r2);
+            Vector v1 = getVector(r1);
+            Vector v2 = getVector(r2);
+            if(v1.size()==0 || v2.size()==0){
+                String v1Type = r1 instanceof NodeTextRectangle ? "NodeVector.id" : "DataVector.id";
+                String v2Type = r2 instanceof NodeTextRectangle ? "NodeVector.id" : "DataVector.id";
+                throw new RuntimeException("Problem getting the vector's name! "+
+                        v1Type+"="+v1.getId()+", "+v2Type+"="+v2.getId());
+            }
+
+            return (1-beta)*(areaCost/maxArea) + beta*(1-cosine(r1, v1, r2, v2));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private double cosine(Rectangle r1, Vector v1, Rectangle r2, Vector v2){
+        Double cosine = null;
+        if( !(r1 instanceof NodeTextRectangle || r2 instanceof NodeTextRectangle)){
+            cosine = vectorCache.getProcessedCosineDataVectors(v1, v2);
+        }
+
+        if(cosine==null){
+            cosine = Vector.fastCosine(v1, v2);
+            vectorCache.storeProcessedCosineDataVectors(v1, v2, cosine);
+        }
+        return cosine;
+    }
+
+    @Override
+    protected Double wasteArea(Rectangle r1, Rectangle r2){        
+        try{
+            double maxArea = ((Rectangle)((IndexEntry)rootEntry).descriptor()).area();
+            double wasteArea = super.wasteArea(r1, r2);
+            Vector v1 = getVector(r1);
+            Vector v2 = getVector(r2);
+            if(v1.size()==0 || v2.size()==0){
+                String v1Type = r1 instanceof NodeTextRectangle ? "NodeVector.id" : "DataVector.id";
+                String v2Type = r2 instanceof NodeTextRectangle ? "NodeVector.id" : "DataVector.id";
+                throw new RuntimeException("Problem getting the vector's name! "+
+                        v1Type+"="+v1.getId()+", "+v2Type+"="+v2.getId());
+            }
+            return (1-beta)*(wasteArea/maxArea) + beta*(1-cosine(r1, v1, r2, v2));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void main(String[] args) throws Exception{
+        java.util.Properties properties = new java.util.Properties();
+        properties.load(new java.io.FileInputStream("DIRtree.properties"));
+
+        int bufferSize = 0;        
+        int vectorCacheSize = 100;
+
+        // internal variables
+        // Leafnodes are 32+4 Bytes of size.
+        // Indexnodes are 32+8 Bytes of size.
+        // so take the maximum for the block size!
+        //int blockSize = 4+2+(32+8)*maxcap;
+        DirTree.INVERTED_FILES_DIRECTORY = properties.getProperty("irTree.folder")+"/ifDir";
+
+        DefaultStatisticCenter statisticCenter = new DefaultStatisticCenter();
+        DirTree dirTree = new DirTree(statisticCenter,"ir_tree_id_",
+                properties.getProperty("irTree.folder") + "/rtree",
+                Integer.parseInt(properties.getProperty("irTree.dimensions")),
+                bufferSize,
+                Integer.parseInt(properties.getProperty("diskStorage.blockSize")),
+                Integer.parseInt(properties.getProperty("irTree.minNodeEntries")),
+                Integer.parseInt(properties.getProperty("irTree.maxNodeEntries")),
+                FileUtils.DISK_PAGE_SIZE, FileUtils.DISK_PAGE_SIZE, vectorCacheSize, true,
+                Double.parseDouble(properties.getProperty("beta")));
+
+        dirTree.open();
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream("SanFranciscoSmall.txt")));
+
+        long time = System.currentTimeMillis();
+        String line=input.readLine();
+        while(line!=null){
+            Item item = parse(line);
+            //System.out.println(item);
+            TextRectangle mbr = new TextRectangle(new double[]{item.lat, item.lgt},
+                    new double[]{item.lat, item.lgt}, item.id, item.txt);
+            //DoublePointRectangleMax mbr = new DoublePointRectangleMax(point, point, RandomUtil.nextDouble(1));
+             dirTree.insert(new KPE(mbr, item.id ,IntegerConverter.DEFAULT_INSTANCE));
+            line=input.readLine();
+        }
+
+        statisticCenter.getCount("treeSizeInBytes").update(dirTree.getSizeInBytes());
+        statisticCenter.getCount("vectorsSizeInBytes").update(dirTree.getVectorsSizeInBytes());
+
+        System.out.println(dirTree.toString());
+
+        System.out.println("\n\n IRTree constructed in "+Util.time(System.currentTimeMillis()-time));
+        System.out.println("Statistics results...");
+        System.out.println(statisticCenter.getStatus());
+
+        dirTree.checkTree((IndexEntry) dirTree.rootEntry());
+        input.close();
+        dirTree.close();
+    }
+
+ }

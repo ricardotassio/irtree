@@ -1,0 +1,26 @@
+## Defines the importance of document similarity versus spatial location.
+beta = 0.5
+
+##Vocabulary that maps an integer (id) to a term
+invertedIndex.termVocabulary = termVocabulary.txt
+
+
+#RTree Parameters
+#The suggested value for MinNodeEntries is MaxNodeEntries/2 or MaxNodeEntries/3
+#Normal RTree occupy 6 bytes (1 short + 1 integer) to store node data plus 44
+# bytes per entry (8 long id + 32 for rectangle) + 4 for the vector id = 36bytes
+#  For page size of 4k, we have minNodeEntries=30 and maxNodeEntries=102
+irTree.minNodeEntries=56
+irTree.maxNodeEntries=113
+
+#The number of dimensions of the Rectangle (MBR) stored in the R-Tree
+irTree.dimensions = 2
+
+#The number of nodes that can stay in memory
+irTree.bufferSize = 1024
+
+#The directory where the irTree data will be stored
+irTree.folder = irTreeData
+
+#Size of the block (page) in bytes
+diskStorage.blockSize = 4096

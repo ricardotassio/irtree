@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util
+END
+DoublePointRectangleMax.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/DoublePointRectangleMax.java
+END
+NodeTextRectangle.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/NodeTextRectangle.java
+END
+TreeHeapEntry.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/TreeHeapEntry.java
+END
+VectorCacheManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/VectorCacheManager.java
+END
+MaxDoubleRTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/MaxDoubleRTree.java
+END
+BooleanRectangle.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/BooleanRectangle.java
+END
+MaxDoubleRectangle.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/MaxDoubleRectangle.java
+END
+DoublePointRectangleBoolean.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/DoublePointRectangleBoolean.java
+END
+TextRectangle.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/TextRectangle.java
+END
+IRTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/IRTree.java
+END
+BooleanStarRTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/BooleanStarRTree.java
+END
+CountContainer.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/CountContainer.java
+END
+StarRTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/StarRTree.java
+END
+DirTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/joao/!svn/ver/1285/projects/XXLCore/trunk/src/xxl/util/DirTree.java
+END
