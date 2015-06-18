@@ -1016,7 +1016,7 @@ public class IRTree extends StarRTree {
         }
 
 
-        System.out.println("\n\n\nTree:\n" + irTree.toString());
+       //System.out.println("\n\n\nTree:\n" + irTree.toString());
 
         System.out.println("IRTree constructed in " + Util.time(System.currentTimeMillis() - time));
         System.out.println("Statistics results...");

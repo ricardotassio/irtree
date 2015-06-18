@@ -22,6 +22,10 @@ public class DirTree extends IRTree {
      * Defines the importance of document similarity versus spatial location.
      */
     private double beta=0.5;
+    protected double maxArea;
+    protected double areaCost;
+    protected Vector v1;
+    protected Vector v2;
 
     public DirTree(StatisticCenter statisticCenter, String id, String outputPath,
             int dimensions, int bufferSize, int blockSize, int minCapacity,
@@ -42,18 +46,18 @@ public class DirTree extends IRTree {
     @Override
     protected Double areaCost(Rectangle r1, Rectangle r2){        
         try {
-            double maxArea = ((Rectangle)((IndexEntry)rootEntry).descriptor()).area();
-            double areaCost =super.areaCost(r1, r2);
-            Vector v1 = getVector(r1);
-            Vector v2 = getVector(r2);
-            if(v1.size()==0 || v2.size()==0){
+            this.maxArea = ((Rectangle)((IndexEntry)rootEntry).descriptor()).area();
+            this.areaCost = super.areaCost(r1, r2);
+            this.v1 = getVector(r1);
+            this.v2 = getVector(r2);
+            if(this.v1.size()==0 || this.v2.size()==0){
                 String v1Type = r1 instanceof NodeTextRectangle ? "NodeVector.id" : "DataVector.id";
                 String v2Type = r2 instanceof NodeTextRectangle ? "NodeVector.id" : "DataVector.id";
                 throw new RuntimeException("Problem getting the vector's name! "+
-                        v1Type+"="+v1.getId()+", "+v2Type+"="+v2.getId());
+                        v1Type+"="+this.v1.getId()+", "+v2Type+"="+this.v2.getId());
             }
 
-            return (1-beta)*(areaCost/maxArea) + beta*(1-cosine(r1, v1, r2, v2));
+            return (1-beta)*(this.areaCost/this.maxArea) + beta*(1-cosine(r1, this.v1, r2, this.v2));
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -135,7 +139,7 @@ public class DirTree extends IRTree {
         statisticCenter.getCount("treeSizeInBytes").update(dirTree.getSizeInBytes());
         statisticCenter.getCount("vectorsSizeInBytes").update(dirTree.getVectorsSizeInBytes());
 
-        System.out.println(dirTree.toString());
+        //System.out.println(dirTree.toString());
 
         System.out.println("\n\n IRTree constructed in "+Util.time(System.currentTimeMillis()-time));
         System.out.println("Statistics results...");
